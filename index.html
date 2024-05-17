@@ -20,7 +20,7 @@
         <!-- main content with gradient background -->
         <main>
             <div class="boolzapp row">
-                <!-------------- --left section with contacts --------------------->
+                <!------------------------------------------------left section with contacts ---------------------------------------------->
                 <section class="left col-4">
                     <!-- my contact -->
                     <div class="actual-chat d-flex justify-content-between align-items-center">
@@ -69,7 +69,8 @@
 
                                 </div>
                             </div> -->
-                            <div v-for="friend, i in contacts" class="user-chat d-flex align-items-center">
+                            <div @click="selectChat(i)" v-for="friend, i in contacts"
+                                class="user-chat d-flex align-items-center">
                                 <div class="img-nick d-flex justify-content-start align-items-center">
                                     <div>
                                         <img :src="contacts[i].avatar" alt="">
@@ -84,15 +85,16 @@
                         </div>
                     </div>
                 </section>
-                <!--------------- right section with conversation ------------------>
+                <!----------------------------------------------- right section with conversation ----------------------------------------->
                 <section class="right col-8">
                     <!-- actual contact -->
                     <div class="actual-chat d-flex justify-content-between align-items-center">
                         <div class="img-nick d-flex justify-content-start align-items-center">
                             <div>
-                                <img class="img-active" src="https://i.pravatar.cc/150?img=56" alt="">
+                                <img v-show="show(i)" v-for="images, i in contacts" class="img-active"
+                                    :src="contacts[i].avatar" alt="">
                             </div>
-                            <div class="fs-4">Filippo</div>
+                            <div v-show="show(i)" v-for="images, i in contacts" class="fs-4">{{contacts[i].name}}</div>
                         </div>
                         <div class="icons">
                             <i class="fa-solid fa-magnifying-glass"></i>
@@ -101,9 +103,13 @@
                         </div>
                     </div>
                     <!-- conversation -->
-                    <div class="conversation d-flex flex-column">
-                        <div class="received-message fs-4">ciao bello come stai?</div>
-                        <div class="fs-4" :class="messageCondition()">tutto ok te?</div>
+                    <div class="conversation">
+                        <div v-show="show(i)" v-for="(friend, i) in contacts" class="messages flex-column">
+                            <div v-for="message, x in contacts[i].messages" class="fs-5"
+                                :class="messageCondition(i, x)">
+                                {{contacts[i].messages[x].message}}
+                            </div>
+                        </div>
                     </div>
                     <!-- user input to chat -->
                     <div class="user-input d-flex align-items-center justify-content-around">

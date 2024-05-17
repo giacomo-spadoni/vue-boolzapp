@@ -173,11 +173,10 @@ createApp({
                     ],
                     lastMessage: ''
                 }
-            ]
+            ],
+            selectedChat: null,
 
         };
-        lastMessage: ''
-
     },
     methods: {
         showLastMessage() {
@@ -185,11 +184,19 @@ createApp({
                 this.contacts[i].lastMessage = this.contacts[i].messages[this.contacts[i].messages.length - 1].message
             }
         },
-        messageCondition() {
-            return this.contacts[0].messages[0].status == 'received' ? 'received-message' : 'sent-message'
+        messageCondition(i, x) {
+            return this.contacts[i].messages[x].status == 'received' ? 'received-message' : 'sent-message'
+        },
+        selectChat(i) {
+            this.selectedChat = i
+            console.log(this.selectedChat)
+        },
+        show(i) {
+            return this.selectedChat === i
         }
     },
     mounted() {
         let timer = setInterval(this.showLastMessage, 1000)
+        this.selectedChat = 0
     },
 }).mount('#app')

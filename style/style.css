@@ -133,6 +133,7 @@ i {
     background-image: url(../img/back3.png);
     background-size: cover;
     padding: 2rem 2rem 2rem 5rem;
+    overflow: auto;
 }
 
 .user-input {
@@ -142,6 +143,15 @@ i {
 
 .user-input input {
     width: 90%;
+}
+
+.messages {
+    display: flex;
+}
+
+.user-chat:hover {
+    background-color: rgba(255, 255, 255, 0.181);
+    cursor: pointer;
 }
 
 .sent-message {
@@ -154,6 +164,7 @@ i {
     align-self: flex-end;
     padding: 5px 10px;
     color: black;
+    margin: 5px;
 }
 
 .received-message {
@@ -166,4 +177,5 @@ i {
     align-self: flex-start;
     padding: 5px 10px;
     color: black;
+    margin: 5px;
 }
