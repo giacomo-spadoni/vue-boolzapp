@@ -25,7 +25,7 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: ''
+                    lastMessage: '',
                 },
                 {
                     name: 'Fabio',
@@ -175,7 +175,8 @@ createApp({
                 }
             ],
             selectedChat: null,
-
+            userMessage: null,
+            userInput: null,
         };
     },
     methods: {
@@ -189,11 +190,31 @@ createApp({
         },
         selectChat(i) {
             this.selectedChat = i
-            console.log(this.selectedChat)
+            // console.log(this.selectedChat)
         },
         show(i) {
             return this.selectedChat === i
-        }
+        },
+        updateUserMessage() {
+            if (this.userInput) {
+                let now = luxon.DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss')
+                // console.log(now)
+                this.contacts[this.selectedChat].messages.push({ date: now, message: this.userInput, status: 'sent' })
+                // console.log(this.contacts[this.selectedChat].messages)
+                setTimeout(() => {
+                    now = luxon.DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss')
+                    if (this.userInput.includes('ciao')) {
+                        this.contacts[this.selectedChat].messages.push({ date: now, message: 'hey ciao!', status: 'received' })
+                    } else if (this.userInput.includes('come stai')) {
+                        this.contacts[this.selectedChat].messages.push({ date: now, message: 'io bene, te tutto a posto?', status: 'received' })
+                    } else {
+                        this.contacts[this.selectedChat].messages.push({ date: now, message: 'ok! è una vita che non ci vediamo', status: 'received' })
+                    }
+                    this.userInput = ''
+                }, 1000)
+
+            }
+        },
     },
     mounted() {
         let timer = setInterval(this.showLastMessage, 1000)

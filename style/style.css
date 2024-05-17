@@ -75,7 +75,7 @@ img {
 }
 
 i {
-    font-size: 20px;
+    font-size: 25px;
     margin: 0 10px;
 }
 
@@ -178,4 +178,10 @@ i {
     padding: 5px 10px;
     color: black;
     margin: 5px;
+}
+
+.date {
+    color: rgba(0, 0, 0, 0.676);
+    font-size: 16px;
+    text-align: end;
 }
