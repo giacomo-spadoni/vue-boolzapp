@@ -181,13 +181,18 @@ createApp({
             searchContact: '',
             lastMessagePop: '',
             popNotify: false,
+            showWriting: false,
         };
     },
     methods: {
         // funzione per aggiornare l'ultimo messaggio e la data nei contatti
         showLastMessage() {
             for (let i = 0; i < this.contacts.length; i++) {
-                this.contacts[i].lastMessage = { message: this.contacts[i].messages[this.contacts[i].messages.length - 1].message, date: this.contacts[i].messages[this.contacts[i].messages.length - 1].date.substr(11, 5) }
+                this.contacts[i].lastMessage = {
+                    message: this.contacts[i].messages[this.contacts[i].messages.length - 1].message,
+                    date: this.contacts[i].messages[this.contacts[i].messages.length - 1].date.substr(11, 5),
+                    dateFull: this.contacts[i].messages[this.contacts[i].messages.length - 1].date
+                }
             }
         },
         // funzione per individuare se il messaggio è ricevuto o inviato e inserire la classe corretta
@@ -214,6 +219,9 @@ createApp({
                 let userInputNow = this.userInput
                 this.userInput = ''
                 let selectedChatNow = this.selectedChat
+                setTimeout(() => {
+                    this.showWriting = true
+                }, 1000)
                 // impostazione della risposta con la condizione ed un timeout
                 setTimeout(() => {
                     now = luxon.DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss')
@@ -230,14 +238,16 @@ createApp({
                     this.popNotify = true
                     if (selectedChatNow != this.selectedChat) {
                         this.contacts[selectedChatNow].newMessage = true
-                        console.log(this.contacts[selectedChatNow].newMessage)
                     }
-                    console.log(this.contacts)
-                }, 4000)
+                    this.showWriting = false
+                }, 5000)
                 setTimeout(() => {
                     this.popNotify = false
-                }, 10000)
+                }, 11000)
             }
+        },
+        ifShowWriting(i) {
+            return this.showWriting && i === this.selectedChat
         },
         // condizione per mostrare o non il popup dei nuovi messaggi
         notify() {

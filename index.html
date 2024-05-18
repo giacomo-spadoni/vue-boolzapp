@@ -76,7 +76,10 @@
                                         </div>
                                         <div class="user">
                                             <div class="fs-4">{{contacts[i].name}}</div>
-                                            <div class="color-lightgrey">{{contacts[i].lastMessage.message}}</div>
+                                            <div v-show="!ifShowWriting(i)" class="color-lightgrey">
+                                                {{contacts[i].lastMessage.message}}</div>
+                                            <div class="color-green" v-show="ifShowWriting(i)">is
+                                                writing...</div>
                                         </div>
                                     </div>
                                     <div class="contact-date color-lightgrey">
@@ -98,7 +101,13 @@
                                 <img v-show="show(i)" v-for="images, i in contacts" class="img-active"
                                     :src="contacts[i].avatar" alt="">
                             </div>
-                            <div v-show="show(i)" v-for="images, i in contacts" class="fs-4">{{contacts[i].name}}</div>
+                            <div v-show="show(i)" v-for="images, i in contacts" class="fs-4">
+                                <div>{{contacts[i].name}}</div>
+                                <div v-show="!showWriting" class="fs-6 color-lightgrey">ultimo accesso:
+                                    {{contacts[i].lastMessage.dateFull}}
+                                </div>
+                                <div class="color-green fs-5" v-show="showWriting">is writing...</div>
+                            </div>
                         </div>
                         <div class="icons">
                             <i class="fa-solid fa-magnifying-glass"></i>
