@@ -25,7 +25,7 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: '',
+                    lastMessage: [], newMessage: false,
                 },
                 {
                     name: 'Fabio',
@@ -48,7 +48,7 @@ createApp({
                             status: 'sent'
                         }
                     ],
-                    lastMessage: ''
+                    lastMessage: '', newMessage: false,
                 },
                 {
                     name: 'Samuele',
@@ -71,7 +71,7 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: ''
+                    lastMessage: '', newMessage: false,
                 },
                 {
                     name: 'Alessandro B.',
@@ -89,7 +89,7 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: ''
+                    lastMessage: '', newMessage: false,
                 },
                 {
                     name: 'Alessandro L.',
@@ -107,7 +107,7 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: ''
+                    lastMessage: '', newMessage: false,
                 },
                 {
                     name: 'Claudia',
@@ -130,7 +130,7 @@ createApp({
                             status: 'sent'
                         }
                     ],
-                    lastMessage: ''
+                    lastMessage: '', newMessage: false,
                 },
                 {
                     name: 'Federico',
@@ -148,7 +148,7 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: ''
+                    lastMessage: '', newMessage: false,
                 },
                 {
                     name: 'Alessia',
@@ -171,53 +171,98 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: ''
+                    lastMessage: '', newMessage: false,
                 }
             ],
             selectedChat: null,
             userMessage: null,
             userInput: null,
+            notifyOn: true,
+            searchContact: '',
+            lastMessagePop: '',
+            popNotify: false,
         };
     },
     methods: {
+        // funzione per aggiornare l'ultimo messaggio e la data nei contatti
         showLastMessage() {
             for (let i = 0; i < this.contacts.length; i++) {
-                this.contacts[i].lastMessage = this.contacts[i].messages[this.contacts[i].messages.length - 1].message
+                this.contacts[i].lastMessage = { message: this.contacts[i].messages[this.contacts[i].messages.length - 1].message, date: this.contacts[i].messages[this.contacts[i].messages.length - 1].date.substr(11, 5) }
             }
         },
+        // funzione per individuare se il messaggio è ricevuto o inviato e inserire la classe corretta
         messageCondition(i, x) {
             return this.contacts[i].messages[x].status == 'received' ? 'received-message' : 'sent-message'
         },
+        // funzione per tenere in memoria la chat selezionata e pulire altri dati dalle chat che di conseguenza vengono deselezionate
         selectChat(i) {
             this.selectedChat = i
-            // console.log(this.selectedChat)
+            this.searchContact = ''
+            this.contacts[i].newMessage = false
         },
+        // funzione per mostrare solo la conversazione del contatto selezionato
         show(i) {
             return this.selectedChat === i
         },
+        // funzione un pò incasinata per rispondere al messaggio inviato e mandare notifiche di messaggi non letti oltre che inserire data attuale ai messaggi
         updateUserMessage() {
             if (this.userInput) {
                 let now = luxon.DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss')
-                // console.log(now)
                 this.contacts[this.selectedChat].messages.push({ date: now, message: this.userInput, status: 'sent' })
-                // console.log(this.contacts[this.selectedChat].messages)
+                this.showLastMessage()
+                let userInputNow = this.userInput
+                this.userInput = ''
+                let selectedChatNow = this.selectedChat
+                // impostazione della risposta con la condizione ed un timeout
                 setTimeout(() => {
                     now = luxon.DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss')
-                    if (this.userInput.includes('ciao')) {
-                        this.contacts[this.selectedChat].messages.push({ date: now, message: 'hey ciao!', status: 'received' })
-                    } else if (this.userInput.includes('come stai')) {
-                        this.contacts[this.selectedChat].messages.push({ date: now, message: 'io bene, te tutto a posto?', status: 'received' })
+                    if (userInputNow.includes('ciao')) {
+                        this.contacts[selectedChatNow].messages.push({ date: now, message: 'hey ciao!', status: 'received' })
+                    } else if (userInputNow.includes('come stai')) {
+                        this.contacts[selectedChatNow].messages.push({ date: now, message: 'io bene, te tutto a posto?', status: 'received' })
                     } else {
-                        this.contacts[this.selectedChat].messages.push({ date: now, message: 'ok! è una vita che non ci vediamo', status: 'received' })
+                        this.contacts[selectedChatNow].messages.push({ date: now, message: 'ok! è una vita che non ci vediamo', status: 'received' })
                     }
-                    this.userInput = ''
-                }, 1000)
-
+                    this.showLastMessage()
+                    // altre piccoli aggiornamenti di variabili che servono per il popup di nuovo messaggio
+                    this.lastMessagePop = this.contacts[selectedChatNow].name
+                    this.popNotify = true
+                    if (selectedChatNow != this.selectedChat) {
+                        this.contacts[selectedChatNow].newMessage = true
+                        console.log(this.contacts[selectedChatNow].newMessage)
+                    }
+                    console.log(this.contacts)
+                }, 4000)
+                setTimeout(() => {
+                    this.popNotify = false
+                }, 10000)
+            }
+        },
+        // condizione per mostrare o non il popup dei nuovi messaggi
+        notify() {
+            if (this.notifyOn) {
+                return true
+            } else {
+                return false
+            }
+        },
+        notifyOff() {
+            this.notifyOn = false
+        },
+        // funzione per la ricerca dei contatti
+        searchFor(i) {
+            let lowerName = this.contacts[i].name.toLowerCase()
+            if (lowerName.includes(this.searchContact.toLowerCase())) {
+                return true
+            } else if (this.searchContact == '') {
+                return true
+            } else {
+                return false
             }
         },
     },
     mounted() {
-        let timer = setInterval(this.showLastMessage, 1000)
+        this.showLastMessage()
         this.selectedChat = 0
     },
 }).mount('#app')

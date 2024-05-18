@@ -24,7 +24,7 @@
                 <!------------------------------------------------left section with contacts ---------------------------------------------->
                 <section class="left col-4">
                     <!-- my contact -->
-                    <div class="actual-chat d-flex justify-content-between align-items-center">
+                    <div class="user-info d-flex justify-content-between align-items-center">
                         <div class="img-nick d-flex justify-content-start align-items-center">
                             <div>
                                 <img class="img-active" src="./img/me.png" alt="">
@@ -38,49 +38,52 @@
                         </div>
                     </div>
                     <!-- notify -->
-                    <div class="notify d-flex align-items-center">
+                    <div v-show="notify()" class="notify align-items-center">
                         <div class="bell">
                             <i class="fa-solid fa-bell-slash"></i>
                         </div>
                         <div>
                             <div class="color-black fs-5">Ricevi notifiche di nuovi messaggi</div>
-                            <a class="color-grey" href="">Attiva notifiche desktop</a>
+                            <div @click="notifyOff()" class="color-grey underline" href="">Attiva notifiche desktop
+                            </div>
                         </div>
                     </div>
+                    <div v-if="selectedChat !== null && contacts[selectedChat] && !notifyOn" class="pop-tify"
+                        :class="{'pop-tify-animation' : popNotify}">
+                        <i class="fa-solid fa-bell"></i>
+                        Hai appena ricevuto un messaggio da:
+                        {{lastMessagePop}}
+                    </div>
                     <!-- contacts list -->
-                    <div class="contacts">
+                    <div :class="{'contacts-no-tify' : !notifyOn}" class="contacts">
                         <!-- search input -->
                         <div class="input-search input-group flex-nowrap mt-2">
                             <span class="input-group-text" id="addon-wrapping"><i
                                     class="fa-solid fa-magnifying-glass"></i></span>
-                            <input type="text" class="form-control" placeholder="Cerca o inizia una nuova chat"
-                                aria-label="Username" aria-describedby="addon-wrapping">
+                            <input v-model="searchContact" type="text" class="form-control"
+                                placeholder="Cerca o inizia una nuova chat" aria-label="Username"
+                                aria-describedby="addon-wrapping">
                         </div>
                         <!-- contacts vue generated -->
                         <div class="contact-list">
-                            <!-- <div class="user-chat d-flex align-items-center">
-                                <div class="img-nick d-flex justify-content-start align-items-center">
-                                    <div>
-                                        <img src="https://i.pravatar.cc/150?img=56" alt="">
+                            <div @click="selectChat(i)" v-show="searchFor(i)" v-for="friend, i in contacts"
+                                class="user-chat align-items-center"
+                                :class="{'first-place' : contacts[i].newMessage, 'selected' : i == selectedChat}">
+                                <div class="img-nick d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-start align-items-center">
+                                        <div>
+                                            <img :src="contacts[i].avatar" alt="">
+                                        </div>
+                                        <div class="user">
+                                            <div class="fs-4">{{contacts[i].name}}</div>
+                                            <div class="color-lightgrey">{{contacts[i].lastMessage.message}}</div>
+                                        </div>
                                     </div>
-                                    <div class="user">
-                                        <div class="fs-4">Filippo</div>
-                                        <div class="color-lightgrey">last message</div>
+                                    <div class="contact-date color-lightgrey">
+                                        <div :class="{'color-green' : contacts[i].newMessage}">
+                                            {{contacts[i].lastMessage.date}}</div>
+                                        <div v-show="contacts[i].newMessage" class="alert-message">1</div>
                                     </div>
-
-                                </div>
-                            </div> -->
-                            <div @click="selectChat(i)" v-for="friend, i in contacts"
-                                class="user-chat d-flex align-items-center">
-                                <div class="img-nick d-flex justify-content-start align-items-center">
-                                    <div>
-                                        <img :src="contacts[i].avatar" alt="">
-                                    </div>
-                                    <div class="user">
-                                        <div class="fs-4">{{contacts[i].name}}</div>
-                                        <div class="color-lightgrey">{{contacts[i].lastMessage}}</div>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
@@ -89,7 +92,7 @@
                 <!----------------------------------------------- right section with conversation ----------------------------------------->
                 <section class="right col-8">
                     <!-- actual contact -->
-                    <div class="actual-chat pe-4 d-flex justify-content-between align-items-center">
+                    <div class="user-info d-flex justify-content-between align-items-center">
                         <div class="img-nick d-flex justify-content-start align-items-center">
                             <div>
                                 <img v-show="show(i)" v-for="images, i in contacts" class="img-active"
@@ -109,7 +112,7 @@
                             <div v-for="message, x in contacts[i].messages" class="fs-5"
                                 :class="messageCondition(i, x)">
                                 {{contacts[i].messages[x].message}}
-                                <div class="date">{{contacts[i].messages[x].date}}</div>
+                                <div class="date">{{contacts[i].messages[x].date.substr(11, 5)}}</div>
                             </div>
                         </div>
                     </div>

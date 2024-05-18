@@ -1,3 +1,5 @@
+/* common styles */
+
 #app {
     width: 100%;
     min-height: 100vh;
@@ -18,21 +20,37 @@
     color: rgb(157, 157, 157);
 }
 
+.color-green {
+    color: green;
+}
+
+.underline {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 input {
     background-color: rgb(108, 108, 108) !important;
     color: white !important;
+    border: none !important;
 }
 
 span {
     background-color: rgb(108, 108, 108) !important;
     color: white !important;
+    border: none !important;
+}
+
+i {
+    font-size: 25px;
+    margin: 0 10px;
 }
 
 main {
     width: 90%;
     height: 90vh;
     background-color: rgb(60, 60, 60);
-    border: 1px solid rgba(255, 255, 255, 0.181);
+    border-radius: 5px;
     margin: 0 auto;
     box-shadow: 0px 10px 30px 20px black;
 }
@@ -53,36 +71,75 @@ img {
     border: 2px solid rgba(255, 255, 255, 0.181);
 }
 
+/* left side styles */
+
 .left {
-    border-right: 1px solid rgba(255, 255, 255, 0.181);
+    border-right: 2px solid rgba(0, 0, 0, 0.415);
     height: 90vh;
     padding-right: 0;
 }
 
-.right {
-    height: 90vh;
-    padding-left: 0;
-}
+/* user info */
 
-.actual-chat {
+.user-info {
     width: 100%;
     height: 70px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.181);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.415);
+}
+
+.icons {
+    width: 145px;
+    flex-shrink: 0;
 }
 
 .img-nick {
     height: 60px;
+    width: 90%;
 }
 
-i {
-    font-size: 25px;
-    margin: 0 10px;
-}
+/* notify section styles */
 
 .notify {
     background-color: #8edafc;
     height: 100px;
+    display: flex;
 }
+
+.pop-tify {
+    position: absolute;
+    left: 45%;
+    top: 20%;
+    background-color: #23b8fdda;
+    height: 6rem;
+    width: 600px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    display: none;
+    opacity: 0;
+}
+
+.pop-tify-animation {
+    display: flex;
+    animation-name: pop-notify;
+    animation-duration: 5s;
+}
+
+@keyframes pop-notify {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 
 .bell {
     color: #8edafc;
@@ -100,6 +157,8 @@ i {
     font-size: 40px;
 }
 
+/* contact list styles */
+
 .input-search {
     width: 98%;
     margin: 0 auto;
@@ -110,15 +169,20 @@ i {
     overflow: auto;
 }
 
+.contacts-no-tify {
+    height: calc(90vh - 70px);
+}
+
 .contact-list {
     width: 100%;
     margin-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.181);
+    display: flex;
+    flex-direction: column;
 }
 
 .user-chat {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.181);
     height: 6rem;
+    display: flex;
 }
 
 .user {
@@ -126,32 +190,59 @@ i {
     margin-left: 1rem;
 }
 
+
+.user-chat:hover {
+    background-color: rgba(255, 255, 255, 0.181);
+    cursor: pointer;
+    border-radius: 10px;
+    transition: .5s;
+}
+
+.contact-date {
+    align-self: start;
+    text-align: end;
+}
+
+.alert-message {
+    background-color: green;
+    color: rgba(76, 76, 76, 1);
+    font-weight: bold;
+    text-align: center;
+    width: 25px;
+    border-radius: 50%;
+}
+
+.selected {
+    background-color: rgb(100, 100, 100);
+    border-radius: 10px;
+}
+
+.first-place {
+    order: -1;
+}
+
+/* right side styles */
+
+.right {
+    height: 90vh;
+    padding-left: 0;
+}
+
+/* conversation section styles */
+
 .conversation {
     width: 100%;
     height: calc(90vh - 150px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.181);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.415);
     background-image: url(../img/back3.png);
     background-size: cover;
     padding: 2rem 2rem 2rem 5rem;
     overflow: auto;
 }
 
-.user-input {
-    height: 80px;
-    width: 100%;
-}
-
-.user-input input {
-    width: 90%;
-}
 
 .messages {
     display: flex;
-}
-
-.user-chat:hover {
-    background-color: rgba(255, 255, 255, 0.181);
-    cursor: pointer;
 }
 
 .sent-message {
@@ -184,4 +275,35 @@ i {
     color: rgba(0, 0, 0, 0.676);
     font-size: 16px;
     text-align: end;
+}
+
+
+/* input user styles */
+
+.user-input {
+    height: 80px;
+    width: 100%;
+}
+
+.user-input input {
+    width: 90%;
+}
+
+/* scrollbars styles */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(60, 60, 60);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track:hover {
+    background: rgb(71, 71, 71);
 }
