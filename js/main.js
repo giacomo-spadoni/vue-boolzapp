@@ -199,6 +199,7 @@ createApp({
             this.selectedChat = i
             this.searchContact = ''
             this.contacts[i].newMessage = false
+            this.focusChatInput();
         },
         // funzione per mostrare solo la conversazione del contatto selezionato
         show(i) {
@@ -258,6 +259,12 @@ createApp({
                 return true
             } else {
                 return false
+            }
+        },
+        // funzione per far si che cliccando sul contatto in automatico viene fatto il focus sull'input della chat
+        focusChatInput() {
+            if (this.$refs.chatInput) {
+                this.$refs.chatInput.focus();
             }
         },
     },

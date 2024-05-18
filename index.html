@@ -119,8 +119,8 @@
                     <!-- user input to chat -->
                     <div class="user-input d-flex align-items-center justify-content-around">
                         <i class="fa-regular fa-face-smile"></i>
-                        <input v-model="userInput" @keyup.enter="updateUserMessage()" type="text" class="form-control"
-                            placeholder="Scrivi un messaggio" aria-label="Recipient's username"
+                        <input v-model="userInput" @keyup.enter="updateUserMessage()" ref="chatInput" type="text"
+                            class="form-control" placeholder="Scrivi un messaggio" aria-label="Recipient's username"
                             aria-describedby="basic-addon2">
                         <i class="fa-solid fa-microphone"></i>
                     </div>
