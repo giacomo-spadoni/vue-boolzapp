@@ -6,6 +6,12 @@
     background: linear-gradient(to bottom, rgba(19, 19, 19, 1) 0%, rgba(17, 17, 17, 1) 11%, rgba(17, 17, 17, 1) 11%, rgba(17, 17, 17, 1) 11%, rgba(28, 28, 28, 1) 12%, rgba(43, 43, 43, 1) 12%, rgba(43, 43, 43, 1) 12%, rgba(76, 76, 76, 1) 12%, rgba(76, 76, 76, 1) 100%);
     color: white;
     padding-top: 5vh;
+    overflow: hidden;
+    position: relative;
+}
+
+i.dropdown-toggle::after {
+    content: '';
 }
 
 .color-black {
@@ -107,36 +113,38 @@ img {
 
 .pop-tify {
     position: absolute;
-    left: 45%;
-    top: 20%;
+    right: 2%;
+    bottom: 2%;
     background-color: #23b8fdda;
-    height: 6rem;
-    width: 600px;
+    height: 10rem;
+    width: 200px;
     border-radius: 10px;
     justify-content: center;
     align-items: center;
-    font-size: 30px;
+    font-size: 20px;
+    padding: .3rem;
+    text-align: center;
     display: none;
-    opacity: 0;
 }
 
 .pop-tify-animation {
     display: flex;
     animation-name: pop-notify;
-    animation-duration: 5s;
+    animation-duration: 6s;
 }
 
 @keyframes pop-notify {
     0% {
-        opacity: 1;
+        right: -15%;
     }
 
     50% {
-        opacity: 1;
+        right: 2%;
+        bottom: 2%;
     }
 
     100% {
-        opacity: 0;
+        bottom: -25%;
     }
 }
 
@@ -287,6 +295,35 @@ img {
 
 .user-input input {
     width: 90%;
+}
+
+.emoji-container {
+    position: relative;
+}
+
+.emoji-arrow i {
+    position: absolute;
+    bottom: 110%;
+    color: #888888;
+    font-size: 50px;
+    left: -5%;
+}
+
+.emoji-list {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    background-color: #888888;
+    border: 3px solid white;
+    border-radius: 10px;
+    bottom: 150%;
+    overflow: auto;
+}
+
+.single-emoji {
+    background-color: unset !important;
+    font-size: 30px;
+    cursor: pointer;
 }
 
 /* scrollbars styles */

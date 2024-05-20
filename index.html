@@ -50,10 +50,14 @@
                     </div>
                     <div v-if="selectedChat !== null && contacts[selectedChat] && !notifyOn" class="pop-tify"
                         :class="{'pop-tify-animation' : popNotify}">
-                        <i class="fa-solid fa-bell"></i>
+                        <i class="fa-solid fa-bell"></i><br>
                         Hai appena ricevuto un messaggio da:
                         {{lastMessagePop}}
                     </div>
+                    <!-- <div class="pop-tify">
+                        <i class="fa-solid fa-bell"></i>
+                        Hai appena ricevuto un messaggio da:
+                    </div> -->
                     <!-- contacts list -->
                     <div :class="{'contacts-no-tify' : !notifyOn}" class="contacts">
                         <!-- search input -->
@@ -76,9 +80,9 @@
                                         </div>
                                         <div class="user">
                                             <div class="fs-4">{{contacts[i].name}}</div>
-                                            <div v-show="!ifShowWriting(i)" class="color-lightgrey">
+                                            <div v-show="!contacts[i].isWriting" class="color-lightgrey">
                                                 {{contacts[i].lastMessage.message}}</div>
-                                            <div class="color-green" v-show="ifShowWriting(i)">is
+                                            <div class="color-green" v-show="contacts[i].isWriting">is
                                                 writing...</div>
                                         </div>
                                     </div>
@@ -103,10 +107,10 @@
                             </div>
                             <div v-show="show(i)" v-for="images, i in contacts" class="fs-4">
                                 <div>{{contacts[i].name}}</div>
-                                <div v-show="!showWriting" class="fs-6 color-lightgrey">ultimo accesso:
+                                <div v-show="!contacts[i].isWriting" class="fs-6 color-lightgrey">ultimo accesso:
                                     {{contacts[i].lastMessage.dateFull}}
                                 </div>
-                                <div class="color-green fs-5" v-show="showWriting">is writing...</div>
+                                <div class="color-green fs-5" v-show="contacts[i].isWriting">is writing...</div>
                             </div>
                         </div>
                         <div class="icons">
@@ -127,10 +131,18 @@
                     </div>
                     <!-- user input to chat -->
                     <div class="user-input d-flex align-items-center justify-content-around">
-                        <i class="fa-regular fa-face-smile"></i>
-                        <input v-model="userInput" @keyup.enter="updateUserMessage()" ref="chatInput" type="text"
-                            class="form-control" placeholder="Scrivi un messaggio" aria-label="Recipient's username"
-                            aria-describedby="basic-addon2">
+                        <div class="emoji-container">
+                            <div class="emoji-list" v-show="showEmoji">
+                                <span @click="addEmoji(x.emoji)" class="single-emoji"
+                                    v-for="x, i in emoji[0]">{{x.emoji}}
+                                </span>
+                            </div>
+                            <div class="emoji-arrow" v-show="showEmoji"><i class="fa-solid fa-sort-down"></i></div>
+                            <i @click="emojiToggle()" id="emojis" class="fa-regular fa-face-smile"></i>
+                        </div>
+                        <input @click="closeEmojiList()" v-model="userInput" @keyup.enter="updateUserMessage()"
+                            ref="chatInput" type="text" class="form-control" placeholder="Scrivi un messaggio"
+                            aria-label="Recipient's username" aria-describedby="basic-addon2">
                         <i class="fa-solid fa-microphone"></i>
                     </div>
                 </section>

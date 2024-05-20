@@ -25,7 +25,7 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: [], newMessage: false,
+                    lastMessage: [], newMessage: false, isWriting: false
                 },
                 {
                     name: 'Fabio',
@@ -48,7 +48,7 @@ createApp({
                             status: 'sent'
                         }
                     ],
-                    lastMessage: '', newMessage: false,
+                    lastMessage: '', newMessage: false, isWriting: false
                 },
                 {
                     name: 'Samuele',
@@ -71,7 +71,7 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: '', newMessage: false,
+                    lastMessage: '', newMessage: false, isWriting: false
                 },
                 {
                     name: 'Alessandro B.',
@@ -89,7 +89,7 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: '', newMessage: false,
+                    lastMessage: '', newMessage: false, isWriting: false
                 },
                 {
                     name: 'Alessandro L.',
@@ -107,7 +107,7 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: '', newMessage: false,
+                    lastMessage: '', newMessage: false, isWriting: false
                 },
                 {
                     name: 'Claudia',
@@ -130,7 +130,7 @@ createApp({
                             status: 'sent'
                         }
                     ],
-                    lastMessage: '', newMessage: false,
+                    lastMessage: '', newMessage: false, isWriting: false
                 },
                 {
                     name: 'Federico',
@@ -148,7 +148,7 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: '', newMessage: false,
+                    lastMessage: '', newMessage: false, isWriting: false
                 },
                 {
                     name: 'Alessia',
@@ -171,7 +171,7 @@ createApp({
                             status: 'received'
                         }
                     ],
-                    lastMessage: '', newMessage: false,
+                    lastMessage: '', newMessage: false, isWriting: false
                 }
             ],
             selectedChat: null,
@@ -181,7 +181,8 @@ createApp({
             searchContact: '',
             lastMessagePop: '',
             popNotify: false,
-            showWriting: false,
+            emoji: [],
+            showEmoji: false,
         };
     },
     methods: {
@@ -220,7 +221,7 @@ createApp({
                 this.userInput = ''
                 let selectedChatNow = this.selectedChat
                 setTimeout(() => {
-                    this.showWriting = true
+                    this.contacts[selectedChatNow].isWriting = true
                 }, 1000)
                 // impostazione della risposta con la condizione ed un timeout
                 setTimeout(() => {
@@ -239,15 +240,12 @@ createApp({
                     if (selectedChatNow != this.selectedChat) {
                         this.contacts[selectedChatNow].newMessage = true
                     }
-                    this.showWriting = false
+                    this.contacts[selectedChatNow].isWriting = false
                 }, 5000)
                 setTimeout(() => {
                     this.popNotify = false
                 }, 11000)
             }
-        },
-        ifShowWriting(i) {
-            return this.showWriting && i === this.selectedChat
         },
         // condizione per mostrare o non il popup dei nuovi messaggi
         notify() {
@@ -277,9 +275,42 @@ createApp({
                 this.$refs.chatInput.focus();
             }
         },
+        // funzione per creare l'array di emoji da un api preso da rapidapi.com quindi con utilizzo anche della key e host
+        getEmoji() {
+            axios.get('https://emoji-api1.p.rapidapi.com/emojis/category/smileys-n-emotion', {
+                headers: {
+                    'x-rapidapi-key': 'd911d70679msh32b9cf0238fb4c5p141e2ajsnb879b43b536a',
+                    'x-rapidapi-host': 'emoji-api1.p.rapidapi.com'
+                }
+            }).then(response => {
+                this.emoji.push(response.data)
+                // console.log(this.emoji[0])
+            })
+        },
+        // click toggle per mostrare le emoji
+        emojiToggle() {
+            if (this.showEmoji) {
+                this.showEmoji = false
+            } else {
+                this.showEmoji = true
+            }
+        },
+        // funzione per aggiungere l'emoji clickata all'input
+        addEmoji(emoji) {
+            if (!this.userInput) {
+                this.userInput = emoji
+            } else {
+                this.userInput += emoji
+            }
+        },
+        // funzioncina per chiudere in automatico la lista emoji se click sull'input
+        closeEmojiList() {
+            this.showEmoji = false
+        }
     },
     mounted() {
         this.showLastMessage()
         this.selectedChat = 0
+        this.getEmoji()
     },
 }).mount('#app')
