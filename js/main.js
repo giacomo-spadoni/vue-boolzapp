@@ -206,6 +206,7 @@ createApp({
             this.searchContact = ''
             this.contacts[i].newMessage = false
             this.focusChatInput();
+            this.userInput = ''
         },
         // funzione per mostrare solo la conversazione del contatto selezionato
         show(i) {
