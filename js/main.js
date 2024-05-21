@@ -183,6 +183,7 @@ createApp({
             popNotify: false,
             emoji: [],
             showEmoji: false,
+            isDarkMode: true,
         };
     },
     methods: {
@@ -307,7 +308,36 @@ createApp({
         // funzioncina per chiudere in automatico la lista emoji se click sull'input
         closeEmojiList() {
             this.showEmoji = false
-        }
+        },
+        // funzione per cambiare in day mode o dark mode
+        darkMode() {
+            const root = document.documentElement;
+            if (this.isDarkMode) {
+                root.style.setProperty('--background-color', 'white');
+                root.style.setProperty('--text-color', 'black');
+                root.style.setProperty('--border-color', 'rgba(200, 255, 255, 1)');
+                root.style.setProperty('--select-color', 'rgba(0, 0, 0, 0.200)');
+                root.style.setProperty('--selected-color', 'rgba(0, 0, 0, 0.150)');
+                root.style.setProperty('--actual-chat-color', 'rgba(200, 255, 255, 1)');
+                root.style.setProperty('--user-input-color', 'rgba(200, 255, 255, 1)');
+                root.style.setProperty('--input-background-color', 'rgb(200, 200, 200)');
+                root.style.setProperty('--conversation-background', 'url(../img/lightback.jpg)')
+                root.style.setProperty('--background', 'linear-gradient(to bottom, rgba(200, 255, 255, 1) 0%, rgba(210, 210, 255, 1) 15%, rgba(215, 215, 255, 1) 16%, rgba(245, 245, 255, 1) 16%, rgba(255, 255, 255, 1) 100%)')
+                this.isDarkMode = false
+            } else {
+                root.style.setProperty('--background-color', 'rgb(60, 60, 60)');
+                root.style.setProperty('--text-color', 'white');
+                root.style.setProperty('--border-color', 'rgba(0, 0, 0, 0.415)');
+                root.style.setProperty('--select-color', 'rgba(255, 255, 255, 0.181)');
+                root.style.setProperty('--selected-color', 'rgb(100, 100, 100)');
+                root.style.setProperty('--actual-chat-color', 'rgb(60, 60, 60)');
+                root.style.setProperty('--user-input-color', 'rgb(60, 60, 60)');
+                root.style.setProperty('--input-background-color', 'rgb(108, 108, 108)');
+                root.style.setProperty('--conversation-background', 'url(../img/back3.png)')
+                root.style.setProperty('--background', 'linear-gradient(to bottom, rgba(19, 19, 19, 1) 0%, rgba(17, 17, 17, 1) 15%, rgba(28, 28, 28, 1) 16%, rgba(76, 76, 76, 1) 16%, rgba(76, 76, 76, 1) 100%)')
+                this.isDarkMode = true
+            }
+        },
     },
     mounted() {
         this.showLastMessage()

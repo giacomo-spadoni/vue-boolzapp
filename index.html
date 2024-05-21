@@ -32,7 +32,7 @@
                             <div class="fs-4">Giacomo</div>
                         </div>
                         <div class="icons pe-2">
-                            <i class="fa-regular fa-circle"></i>
+                            <i @click="darkMode()" class="pointer fa-regular fa-circle"></i>
                             <i class="fa-solid fa-message"></i>
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </div>
@@ -134,7 +134,7 @@
                                 </span>
                             </div>
                             <div class="emoji-arrow" v-show="showEmoji"><i class="fa-solid fa-sort-down"></i></div>
-                            <i @click="emojiToggle()" id="emojis" class="fa-regular fa-face-smile"></i>
+                            <i @click="emojiToggle()" id="emojis" class="pointer fa-regular fa-face-smile"></i>
                         </div>
                         <input @click="closeEmojiList()" v-model="userInput" @keyup.enter="updateUserMessage()"
                             ref="chatInput" type="text" class="form-control" placeholder="Scrivi un messaggio"

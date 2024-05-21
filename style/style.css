@@ -1,13 +1,31 @@
 /* common styles */
 
+:root {
+    --background: linear-gradient(to bottom, rgba(19, 19, 19, 1) 0%, rgba(17, 17, 17, 1) 15%, rgba(28, 28, 28, 1) 16%, rgba(76, 76, 76, 1) 16%, rgba(76, 76, 76, 1) 100%);
+    --background-color: rgb(60, 60, 60);
+    --text-color: white;
+    --border-color: rgba(0, 0, 0, 0.415);
+    --select-color: rgba(255, 255, 255, 0.181);
+    --selected-color: rgb(100, 100, 100);
+    --input-background-color: rgb(108, 108, 108);
+    --conversation-background: url(../img/back3.png);
+    --user-input-color: rgb(60, 60, 60);
+    --actual-chat-color: rgb(60, 60, 60);
+
+}
+
 #app {
     width: 100%;
     min-height: 100vh;
-    background: linear-gradient(to bottom, rgba(19, 19, 19, 1) 0%, rgba(17, 17, 17, 1) 11%, rgba(17, 17, 17, 1) 11%, rgba(17, 17, 17, 1) 11%, rgba(28, 28, 28, 1) 12%, rgba(43, 43, 43, 1) 12%, rgba(43, 43, 43, 1) 12%, rgba(76, 76, 76, 1) 12%, rgba(76, 76, 76, 1) 100%);
-    color: white;
+    background: var(--background);
+    color: var(--text-color);
     padding-top: 5vh;
     overflow: hidden;
     position: relative;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 i.dropdown-toggle::after {
@@ -36,14 +54,14 @@ i.dropdown-toggle::after {
 }
 
 input {
-    background-color: rgb(108, 108, 108) !important;
-    color: white !important;
+    background-color: var(--input-background-color) !important;
+    color: var(--text-color) !important;
     border: none !important;
 }
 
 span {
-    background-color: rgb(108, 108, 108) !important;
-    color: white !important;
+    background-color: var(--input-background-color) !important;
+    color: var(--text-color) !important;
     border: none !important;
 }
 
@@ -55,7 +73,7 @@ i {
 main {
     width: 90%;
     height: 90vh;
-    background-color: rgb(60, 60, 60);
+    background-color: var(--background-color);
     border-radius: 5px;
     margin: 0 auto;
     box-shadow: 0px 10px 30px 20px black;
@@ -66,7 +84,7 @@ img {
     width: 80px;
     border-radius: 50%;
     margin: 0 10px;
-    border: 2px solid rgba(255, 255, 255, 0.181);
+    border: 2px solid var(--select-color);
 }
 
 .img-active {
@@ -74,13 +92,13 @@ img {
     width: 60px;
     border-radius: 50%;
     margin: 0 10px;
-    border: 2px solid rgba(255, 255, 255, 0.181);
+    border: 2px solid var(--select-color);
 }
 
 /* left side styles */
 
 .left {
-    border-right: 2px solid rgba(0, 0, 0, 0.415);
+    border-right: 2px solid var(--border-color);
     height: 90vh;
     padding-right: 0;
 }
@@ -90,7 +108,9 @@ img {
 .user-info {
     width: 100%;
     height: 70px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.415);
+    border-bottom: 2px solid var(--border-color);
+    background-color: var(--actual-chat-color);
+    border-radius: 5px 5px 0 0;
 }
 
 .icons {
@@ -201,7 +221,7 @@ img {
 
 
 .user-chat:hover {
-    background-color: rgba(255, 255, 255, 0.181);
+    background-color: var(--select-color);
     cursor: pointer;
     border-radius: 10px;
 }
@@ -221,7 +241,7 @@ img {
 }
 
 .selected {
-    background-color: rgb(100, 100, 100);
+    background-color: var(--selected-color);
     border-radius: 10px;
 }
 
@@ -241,8 +261,8 @@ img {
 .conversation {
     width: 100%;
     height: calc(90vh - 150px);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.415);
-    background-image: url(../img/back3.png);
+    border-bottom: 2px solid var(--border-color);
+    background-image: var(--conversation-background);
     background-size: cover;
     padding: 2rem 2rem 2rem 5rem;
     overflow: auto;
@@ -291,6 +311,8 @@ img {
 .user-input {
     height: 80px;
     width: 100%;
+    background-color: var(--user-input-color);
+    border-radius: 0 0 5px 0;
 }
 
 .user-input input {
@@ -333,7 +355,7 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-    background: rgb(60, 60, 60);
+    background: var(--background-color);
 }
 
 ::-webkit-scrollbar-thumb {
